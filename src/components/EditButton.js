@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import TaskContext from '../context/Context'
 import EditTodo from './EditTodo'
 
-const EditButton = ({todos, setTodos, id}) => {
+const EditButton = ({ id }) => {
+    const { todos, setTodos } = useContext(TaskContext)
     const [show, setShow] = useState(false)
 
     const editTodo = (id) => {

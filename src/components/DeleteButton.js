@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import TaskContext from '../context/Context'
 
-const DeleteButton = ({id, todos, setTodos}) => {
+const DeleteButton = ({ id }) => {
+  const { todos, setTodos } = useContext(TaskContext)
 
     const removeTodo = () => {
         const allTodos = todos

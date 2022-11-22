@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import TaskContext from '../context/Context'
 
-const CreateTodo = ({todos, setTodos}) => {
+const CreateTodo = () => {
+    const { todos, setTodos } = useContext(TaskContext)
     const [todo, setTodo] = useState('')
 
     const newTodo = {
         title: todo,
-        id: Math.random()
+        id: Math.random(),
+        done: false
       }
 
     const addTodo = (newTodo) => {

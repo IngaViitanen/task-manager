@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled, { css } from 'styled-components'
+import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
 import DeleteButton from './DeleteButton'
 import EditButton from './EditButton'
+
 // import DoneButton from './DoneButton'
 
 const TodosList = () => {
-  const [todos, setTodos] = useState([ {title: 'walk the cat', id: 1, done: false}, {title: 'clean', id: 2,  done: false}, {title: 'go outside', id: 3,  done: false} ])
+  const { todos, setTodos } = useContext(TaskContext)
+  // const [todos, setTodos] = useState([ {title: 'walk the cat', id: 1, done: false}, {title: 'clean', id: 2,  done: false}, {title: 'go outside', id: 3,  done: false} ])
+
   
   const updateTask = (id) => {
     const findTask = todos.find(todo => todo.id === id)
@@ -35,13 +39,13 @@ const TodosList = () => {
                     (<Finished>{todo.title}</Finished>) 
                     : 
                     (<List>{todo.title}</List>)}
-                    <DeleteButton id={todo.id} todos={todos} setTodos={setTodos}/> 
-                    <EditButton  todos={todos} setTodos={setTodos} id={todo.id}/>
+                    <DeleteButton id={todo.id}/> 
+                    <EditButton  id={todo.id}/>
                     {/* <DoneButton todos={todos} setTodos={setTodos}/> */}
                     <button onClick={() => updateTask(todo.id)} >Done</button>
                   </div>
         })}
-        <CreateTodo todos={todos} setTodos={setTodos}/> 
+        <CreateTodo /> 
     </section>
   )
 }
