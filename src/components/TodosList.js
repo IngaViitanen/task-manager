@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled, { css } from 'styled-components'
 import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
@@ -8,28 +8,25 @@ import EditButton from './EditButton'
 // import DoneButton from './DoneButton'
 
 const TodosList = () => {
-  const { todos, setTodos } = useContext(TaskContext)
-  // const [todos, setTodos] = useState([ {title: 'walk the cat', id: 1, done: false}, {title: 'clean', id: 2,  done: false}, {title: 'go outside', id: 3,  done: false} ])
-
+  const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext)  
   
   const updateTask = (id) => {
     const findTask = todos.find(todo => todo.id === id)
-    const todoCopy = {...findTask, done: todos.done = true}
-    if(findTask.done === false){
-      taskDone(todoCopy)
+    const todoCopy = {...findTask, done: todos.done = !todos.done}
+    const finishedTasksArr = [...doneTasks, todoCopy]
+    if(!findTask.done){
+      markTaskDone(todoCopy)
+      setDoneTasks(finishedTasksArr)
     }
   }
 
-  const taskDone = (finished) => {
+  const markTaskDone = (finished) => {
     const array = [...todos]
     let checkFinished = array.map((todo) => todo.id === finished.id ? finished : todo)
     if(checkFinished){
       setTodos(checkFinished)
-      console.log(todos)
     }
   }
-
-  console.log(todos)
 
   return (
     <section>
@@ -46,6 +43,10 @@ const TodosList = () => {
                   </div>
         })}
         <CreateTodo /> 
+
+        {doneTasks.map((task) => {
+          return <li key={task.id}>{task.title}</li>
+        })}
     </section>
   )
 }

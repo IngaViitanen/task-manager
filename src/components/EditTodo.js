@@ -1,9 +1,8 @@
-import React, {useState, useContext} from 'react'
-import TaskContext from '../context/Context'
+import React, { useState } from 'react'
+// import TaskContext from '../context/Context'
 
 const EditTodo = ({todos, setTodos, id, show, setShow}) => {
     const [todo, setTodo] = useState('')
-    // const { todos, setTodos } = useContext(TaskContext)
     
     const editedTodo = {
         title: todo,
