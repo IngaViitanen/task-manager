@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
@@ -8,7 +8,16 @@ import EditButton from './EditButton'
 // import DoneButton from './DoneButton'
 
 const TodosList = () => {
-  const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext)  
+  const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
+  
+  useEffect(() => {
+    if(doneTasks.length === 1){
+      console.log('FIRST TASK FINISHED')
+    } else if(doneTasks.length === 5){
+      console.log("FIFTH TASK FINISHED")
+    }
+  
+  }, [doneTasks])
   
   const updateTask = (id) => {
     const findTask = todos.find(todo => todo.id === id)
