@@ -6,6 +6,10 @@ import DeleteButton from './DeleteButton'
 import EditButton from './EditButton'
 
 // import DoneButton from './DoneButton'
+// TODO:
+// round checkmark to finish tasks, can click entire task to mark finished
+// hold 2sec to edit
+// delete button appears when in edit mode
 
 const TodosList = () => {
   const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
@@ -37,18 +41,23 @@ const TodosList = () => {
     }
   }
 
+  const openDetails = () => {
+    console.log('open details')
+  }
+
   return (
     <section>
         {todos.map((todo) => {
             return <div key={todo.id}>
+                  <input type="checkbox"  onClick={() => updateTask(todo.id)}></input>
                     {todo.done === true ? 
                     (<Finished>{todo.title}</Finished>) 
                     : 
                     (<List>{todo.title}</List>)}
                     <DeleteButton id={todo.id}/> 
                     <EditButton  id={todo.id}/>
-                    {/* <DoneButton todos={todos} setTodos={setTodos}/> */}
-                    <button onClick={() => updateTask(todo.id)} >Done</button>
+
+                    <button onClick={openDetails}>...</button>
                   </div>
         })}
         <CreateTodo /> 
