@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
@@ -10,6 +10,8 @@ import EditButton from './EditButton'
 const TodosList = () => {
   const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
   const [showCreate, setShowCreate] = useState(false)
+  const dragTask = useRef(null)
+  const dragOverTask = useRef(null)
   
   useEffect(() => {
     if(doneTasks.length === 1){
@@ -38,14 +40,31 @@ const TodosList = () => {
     }
   }
 
-  const moveTaskQue = () => {
-    
+
+  const handleDrag = () => {
+    let tasksDupe = [...todos]
+
+    const draggedTaskContent = tasksDupe.splice(dragTask.current, 1)[0]
+
+    tasksDupe.splice(dragOverTask.current, 0, draggedTaskContent)
+
+    dragTask.current = null
+    dragOverTask.current = null
+
+    setTodos(tasksDupe)
   }
 
   return (
     <section>
-        {todos.map((todo) => {
-            return <Task key={todo.id}>
+        {todos.map((todo, index) => {
+            return <Task 
+                    draggable
+                    key={todo.id}
+                    onDragStart={(e) => dragTask.current = index}
+                    onDragEnter={(e) => dragOverTask.current = index}
+                    onDragEnd={handleDrag}
+                    onDragOver={(e) => e.preventDefault()}
+                    >
                   <CheckBox type="checkbox"  onClick={() => updateTask(todo.id)}></CheckBox>
                   {/* <CustomBox></CustomBox> */}
                     {todo.done === true ? 
@@ -55,7 +74,7 @@ const TodosList = () => {
                     {/* <DeleteButton id={todo.id}/>  */}
                     {/* <EditButton  id={todo.id}/> */}
                       
-                    <Button onClick={moveTaskQue}></Button>
+                    <Button></Button>
                   </Task>
         })}
 
