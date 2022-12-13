@@ -43,14 +43,10 @@ const TodosList = () => {
 
   const handleDrag = () => {
     let tasksDupe = [...todos]
-
     const draggedTaskContent = tasksDupe.splice(dragTask.current, 1)[0]
-
     tasksDupe.splice(dragOverTask.current, 0, draggedTaskContent)
-
     dragTask.current = null
     dragOverTask.current = null
-
     setTodos(tasksDupe)
   }
 
@@ -103,6 +99,7 @@ const OpenCreateBtn = styled.button`
     font-size: 3.3rem;
     font-weight: bold;
     padding: 0;
+    cursor: pointer;
 `;
 
 const Button = styled.button`
