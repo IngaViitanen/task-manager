@@ -9,7 +9,7 @@ import EditButton from './EditButton'
 
 const TodosList = () => {
   const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
-  const [showDetails, setShowDetails] = useState(false)
+  const [showCreate, setShowCreate] = useState(false)
   
   useEffect(() => {
     if(doneTasks.length === 1){
@@ -54,11 +54,19 @@ const TodosList = () => {
                     (<List>{todo.title}</List>)}
                     {/* <DeleteButton id={todo.id}/>  */}
                     {/* <EditButton  id={todo.id}/> */}
-
+                      
                     <Button onClick={moveTaskQue}></Button>
                   </Task>
         })}
-        <CreateTodo /> 
+
+        {
+        showCreate 
+        ? 
+        <CreateTodo showCreate={showCreate} setShowCreate={setShowCreate}/> 
+        :
+        <OpenCreateBtn onClick={() => setShowCreate(!showCreate)} >+</OpenCreateBtn>
+        }
+        
 
         {doneTasks.map((task) => {
           return <li key={task.id}>{task.title}</li>
@@ -67,51 +75,62 @@ const TodosList = () => {
   )
 }
 
+const OpenCreateBtn = styled.button`
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 90px;
+    background-color: #888;
+    font-size: 3.3rem;
+    font-weight: bold;
+    padding: 0;
+`;
+
 const Button = styled.button`
-margin: 1rem;
-background-color: transparent;
-width: 30px;
-height: 10px;
-border: none;
-border-top: 3px solid white;
-border-bottom: 3px solid white;
-cursor: grab;
-&:active{
-  cursor: grabbing;
-}
+    margin: 1rem;
+    background-color: transparent;
+    width: 30px;
+    height: 10px;
+    border: none;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    cursor: grab;
+    &:active{
+      cursor: grabbing;
+    }
 `;
 
 const CheckBox = styled.input`
-margin: 1rem;
+    margin: 1rem;
 `;
 
 const CustomBox = styled.span`
-margin: 1rem;
+    margin: 1rem;
 `;
 
 
 
 const Task = styled.article`
-background-color: #383838;
-margin: 1rem;
-width: 260px;
-height: 50px;
-border-radius: 15px;
-display: flex;
-justify-content: space-around;
-align-items: center;
+    background-color: #383838;
+    margin: 1rem;
+    width: 260px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 `;
 
 const List = styled.li`
-list-style: none;
-text-transform: capitalize;
-font-size: 1.1rem;
-width: 70%;
-text-align: left;
+    list-style: none;
+    text-transform: capitalize;
+    font-size: 1.1rem;
+    width: 70%;
+    text-align: left;
 `;
 
 const Finished = styled(List)`
-text-decoration: line-through;
+    text-decoration: line-through;
 `;
 
 

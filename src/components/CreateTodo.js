@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import TaskContext from '../context/Context'
 
-const CreateTodo = () => {
+const CreateTodo = ({showCreate, setShowCreate}) => {
     const { todos, setTodos } = useContext(TaskContext)
     const [todo, setTodo] = useState('')
 
@@ -19,6 +19,7 @@ const CreateTodo = () => {
     const submitTodo = () => {
         addTodo(newTodo)
         setTodo('')
+        setShowCreate(!showCreate)
       }
 
   return (
