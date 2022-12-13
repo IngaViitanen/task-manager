@@ -12,7 +12,7 @@ let year = date.getFullYear();
 
   return (
     <>
-        <h1>{today} {day}/{month}/{year}</h1>
+        <h1>{today} {day}/{month}</h1>
     </>
   )
 }
