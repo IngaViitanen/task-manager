@@ -3,13 +3,15 @@ import styled, { css } from 'styled-components'
 import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
 import DeleteButton from './DeleteButton'
-import EditButton from './EditButton'
+// import EditButton from './EditButton'
+import EditTodo from './EditTodo'
 
 // import DoneButton from './DoneButton'
 
 const TodosList = () => {
   const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
   const [showCreate, setShowCreate] = useState(false)
+  const [show, setShow] = useState(false)
   const dragTask = useRef(null)
   const dragOverTask = useRef(null)
   
@@ -50,6 +52,17 @@ const TodosList = () => {
     setTodos(tasksDupe)
   }
 
+  const editTodo = (id) => {
+    const allTodos = todos
+    const filterTodos = allTodos.filter(t => t.id === id)
+    if(todos.id === id){
+        setShow(show)
+    } else {
+        setShow(!show)
+    }
+    console.log(filterTodos)
+}
+
   return (
     <section>
         {todos.map((todo, index) => {
@@ -63,12 +76,18 @@ const TodosList = () => {
                     >
                   <CheckBox type="checkbox"  onClick={() => updateTask(todo.id)}></CheckBox>
                   {/* <CustomBox></CustomBox> */}
-                    {todo.done === true ? 
-                    (<Finished>{todo.title}</Finished>) 
+                    {/* {todo.done === true ?  */}
+                    {/* // (<Finished>{todo.title}</Finished>)  */}
+                    
+                    {/* :  */}
+                    {show ? 
+                    (<EditTodo todos={todos} setTodos={setTodos} id={todo.id} show={show} setShow={setShow}/>) 
                     : 
-                    (<List>{todo.title}</List>)}
+                    (<List  onClick={() => editTodo(todo.id)} >{todo.title}</List>)
+                    }
+                    
                     {/* <DeleteButton id={todo.id}/>  */}
-                    {/* <EditButton  id={todo.id}/> */}
+                    {/* <EditButton id={todo.id}/> */}
                       
                     <Button></Button>
                   </Task>
@@ -118,6 +137,10 @@ const Button = styled.button`
 
 const CheckBox = styled.input`
     margin: 1rem;
+    cursor: pointer;
+    &:checked ${List}{
+      text-decoration: line-through;
+    }
 `;
 
 const CustomBox = styled.span`
@@ -143,6 +166,7 @@ const List = styled.li`
     font-size: 1.1rem;
     width: 70%;
     text-align: left;
+    cursor: pointer;
 `;
 
 const Finished = styled(List)`
