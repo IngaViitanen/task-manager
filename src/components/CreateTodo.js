@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import TaskContext from '../context/Context'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const CreateTodo = ({showCreate, setShowCreate}) => {
     const { todos, setTodos } = useContext(TaskContext)

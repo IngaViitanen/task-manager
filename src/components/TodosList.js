@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import TaskContext from '../context/Context'
 import CreateTodo from './CreateTodo'
-import DeleteButton from './DeleteButton'
-// import EditButton from './EditButton'
-import EditTodo from './EditTodo'
+// import DeleteButton from './DeleteButton'
+import EditButton from './EditButton'
+// import EditTodo from './EditTodo'
 
 // import DoneButton from './DoneButton'
 
 const TodosList = () => {
   const { todos, setTodos, doneTasks, setDoneTasks } = useContext(TaskContext) 
   const [showCreate, setShowCreate] = useState(false)
-  const [show, setShow] = useState(false)
   const dragTask = useRef(null)
   const dragOverTask = useRef(null)
   
@@ -52,21 +51,10 @@ const TodosList = () => {
     setTodos(tasksDupe)
   }
 
-  const editTodo = (id) => {
-    const allTodos = todos
-    const filterTodos = allTodos.filter(t => t.id === id)
-    if(todos.id === id){
-        setShow(show)
-    } else {
-        setShow(!show)
-    }
-    console.log(filterTodos)
-}
-
   return (
     <section>
         {todos.map((todo, index) => {
-            return <Task 
+            return <StyledTask 
                     draggable
                     key={todo.id}
                     onDragStart={(e) => dragTask.current = index}
@@ -74,23 +62,14 @@ const TodosList = () => {
                     onDragEnd={handleDrag}
                     onDragOver={(e) => e.preventDefault()}
                     >
-                  <CheckBox type="checkbox"  onClick={() => updateTask(todo.id)}></CheckBox>
+                  <StyledInput type="checkbox"  onClick={() => updateTask(todo.id)}></StyledInput>
                   {/* <CustomBox></CustomBox> */}
-                    {/* {todo.done === true ?  */}
-                    {/* // (<Finished>{todo.title}</Finished>)  */}
-                    
-                    {/* :  */}
-                    {show ? 
-                    (<EditTodo todos={todos} setTodos={setTodos} id={todo.id} show={show} setShow={setShow}/>) 
-                    : 
-                    (<List  onClick={() => editTodo(todo.id)} >{todo.title}</List>)
-                    }
                     
                     {/* <DeleteButton id={todo.id}/>  */}
-                    {/* <EditButton id={todo.id}/> */}
+                    <EditButton id={todo.id}/>
                       
-                    <Button></Button>
-                  </Task>
+                    <StyledButton></StyledButton>
+                  </StyledTask>
         })}
 
         {
@@ -98,7 +77,7 @@ const TodosList = () => {
         ? 
         <CreateTodo showCreate={showCreate} setShowCreate={setShowCreate}/> 
         :
-        <OpenCreateBtn onClick={() => setShowCreate(!showCreate)} >+</OpenCreateBtn>
+        <StyledCreateBtn onClick={() => setShowCreate(!showCreate)} >+</StyledCreateBtn>
         }
         
 
@@ -109,7 +88,7 @@ const TodosList = () => {
   )
 }
 
-const OpenCreateBtn = styled.button`
+const StyledCreateBtn = styled.button`
     width: 60px;
     height: 60px;
     border: none;
@@ -121,7 +100,7 @@ const OpenCreateBtn = styled.button`
     cursor: pointer;
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
     margin: 1rem;
     background-color: transparent;
     width: 30px;
@@ -135,12 +114,9 @@ const Button = styled.button`
     }
 `;
 
-const CheckBox = styled.input`
+const StyledInput = styled.input`
     margin: 1rem;
     cursor: pointer;
-    &:checked ${List}{
-      text-decoration: line-through;
-    }
 `;
 
 const CustomBox = styled.span`
@@ -149,7 +125,7 @@ const CustomBox = styled.span`
 
 
 
-const Task = styled.article`
+const StyledTask = styled.article`
     background-color: #383838;
     margin: 1rem;
     width: 260px;
@@ -158,19 +134,6 @@ const Task = styled.article`
     display: flex;
     justify-content: space-around;
     align-items: center;
-`;
-
-const List = styled.li`
-    list-style: none;
-    text-transform: capitalize;
-    font-size: 1.1rem;
-    width: 70%;
-    text-align: left;
-    cursor: pointer;
-`;
-
-const Finished = styled(List)`
-    text-decoration: line-through;
 `;
 
 

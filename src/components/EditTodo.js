@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import TaskContext from '../context/Context'
+import DeleteButton from './DeleteButton'
 
 const EditTodo = ({todos, setTodos, id, show, setShow}) => {
     const [todo, setTodo] = useState('')
@@ -25,6 +25,8 @@ const EditTodo = ({todos, setTodos, id, show, setShow}) => {
                 return <div  key={t.id}>
                     <input type="text" defaultValue={t.title} onChange={(e) => setTodo(e.target.value)}/>
                     <button onClick={submitEdit} >save</button>
+                    <button onClick={() => setShow(!show)} >go back</button>
+                    <DeleteButton id={t.id}/>
                 </div>
             })}
         </article>

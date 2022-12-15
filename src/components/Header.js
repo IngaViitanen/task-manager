@@ -7,7 +7,7 @@ const Header = () => {
 let day = date.getDate();
 let today = weekday[date.getDay()]
 let month = date.getMonth() + 1;
-let year = date.getFullYear();
+// let year = date.getFullYear();
 
 
   return (
